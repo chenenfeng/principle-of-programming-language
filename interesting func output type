@@ -1,0 +1,8 @@
+# let ff {contents = aa} li =[aa(li)];;
+val ff : ('a -> 'b) ref -> 'a -> 'b list = <fun>
+
+# let ff li {contents = aa} =[li(aa)];;
+val ff : ('a -> 'b) -> 'a ref -> 'b list = <fun>
+
+let ff li  =function {contents = aa} -> Some(li(aa)) 
+val ff : ('a -> 'b) -> 'a ref -> 'b option = <fun>
