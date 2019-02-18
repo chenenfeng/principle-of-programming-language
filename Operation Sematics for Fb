@@ -1,0 +1,83 @@
+Fb syntax:
+application above 
+v::= True| False|0|1|2|... Fun x -> e| x |possible value
+how to define x in grammer? thats a bug, so we add the value x in v::=
+(possible expression) e::= e and e|e or e| not e| e+e | e-e | e = e | (e) | e e (call function)| If e then e Else e | v | Let x = e In e | Let Rec...(book)
+no typing, pure functional
+x ::= (alpha numeric strings)
+possible variable
+
+Operation Sematics for Fb
+goal: e=>v relation
+tests: 3+4 => 7
+(fun x -> x+1) 5 -> 6
+((fun x -> fun y -> x+y) 5 ) 4 => 9  curring 
+
+e.g. ( Fun x-> x+1 ) 5 => 
+rip out x+1(body) substitude x with argument 5 = 5+1 => 6
+
+call by value, first evaluate the argument  lmbda-calculus
+e.g.2 (Fun x -> x+1) (3+2)
+
+e.g.3 function calling argument 5, not yet worked function， need a work to make a function!
+((Fun y -> Fun z -> y+z) 4) 5 => 9
+Step 1: evaluation ((Fun y -> Fun z -> y+z) 4) rip out the body of the function (Fun z -> y+z)),
+replace y with 4 （y is the parameter of function: Fun y -> *) 
+so we gain Fun z -> z + 4, that's the value of the function: ((Fun y -> Fun z -> y+z) 4)
+Step 2: apply function Fun z -> z + 4, rip out the body z+4, replace z with 5
+
+Fb simple rules
+           v1 in Z, v2 in Z, v3 is "v1+v2"
+v => v     v1 + v2 => v3 
+            sound bad but not complete 
+               (3+4)+2  (3+4) cannot match v1
+               （also need to allow ((Fun x -> x+1) 3 ) + 7
+Correct add rule:
+e1=>v1  e2=>v2 v1,v2 in Z, v1+ v2 = v3
+e1+e2 => v3
+
+And, Or, Not -- see bool
+- = -- like +/And
+
+Challenge: function application
+Subtask: Define Substitution
+  e.g. "x+1 with 5 replacing x" = 5+1
+  formally, (x+1)[5/x] = 5+1
+see book for full definition
+Subtittle of substitution:
+(Fun y -> Fun y -> 3 + y) 2  classical shadowing, middle y is shadows to first y, and last y refers to middle y
+Step 1: Rip out the body of the function Fun y -> 3 + y
+Step 2: substitue FREE y with 2  will be (Fun y -> 3 + y)[2/y]  = Fun y -> 3 + y
+(Fun y -> 3 + y) y in this function is bound, it obligate with relation
+substitution is always about uses, dont apply it in definition, like Fun y's y, Fun y -> * is definition
+
+y is FREE in e means the use of y has no definition
+y is bound in e if the use has a definition
+
+hobbled rule first ( imcomplete rule first) dont apply for all program
+  e[v\x] => v'
+(Fun x -> e) v => v'
+rip out e then e[v\x] => v'
+
+e.g.
+pattern variable/ meta variable x
+ (z+1)[2/z] z is free since no definiton (z+1)[2/z]  = 2+1 => 3(3 is v')
+(Fun z -> z+1) 2 => 3
+
+Full function application!
+e1 => Fun x -> e, e2 => v  rip out e[v/x] => v'
+e1 e2 => v'
+
+e.g. ((Fun y -> Fun z -> y+z) 4) 5 => 9
+e1: ((Fun y -> Fun z -> y+z) 4)
+lets do e1 => v:
+(Fun z -> y+z) [4/y] = Fun z -> 4+z
+so v is Fun z -> 4+z
+
+whole proof   tree
+e1 => Fun z -> 4+z, 5 => 5, rip out (4+z)[5/z] => 9
+((Fun y -> Fun z -> y+z) 4) 5 => 9
+
+
+
+           
