@@ -1,0 +1,95 @@
+type 'a stream_t = 
+  | End
+  | Next of 'a * (unit -> 'a stream_t);;
+  
+let rec infinite_ones = Next(1, fun _ -> infinite_ones);;
+
+(* to get the head of the infinite list *)
+let stream_hd s = 
+match s with 
+| End -> failwith "list is ended" 
+| Next(h,t) -> h
+;;
+
+output:!!!!!
+This expression has type int stream_t/2458
+       but an expression was expected of type 'a stream_t/2641
+
+crazy...     
+
+how to get the function's output in pattern matching
+
+functional programming
+define function: 
+1. let average a b =
+  (a +. b) /. 2.0;;
+2. let x5  = function f,g,h->(f(g(h)), g(h));; this definition method function can only get one argument
+
+let x2 f g x = f (g(x));;
+(* val x2 : ('a -> 'b) -> ('c -> 'a) -> 'c -> 'b *)
+
+Polymorphic functions
+What about a function which takes anything as an argument? 
+Here's an odd function which takes an argument, but just ignores it and always returns 3:
+let give_me_a_three x = 3
+type: give_me_a_three : 'a -> int
+where 'a really does mean any type. 
+You can, for example, call this function as give_me_a_three "foo" or give_me_a_three 2.0 
+and both are quite valid expressions in OCaml.
+
+functional language cool features:
+1. type inference
+you don't need to declare the types of your functions and variables, 
+because OCaml will just figure them out for you!
+In addition OCaml goes on to check all your types match up (even across different files).
+
+
+
+local and global definition, reference
+1.local variable:
+let average a b =
+    let sum = a +. b in
+    sum /. 2.0;;
+The standard phrase: let name = expression in 
+is used to define a named local expression, and name can then be used later on in the function instead of expression
+In the OCaml version, sum is just a shorthand name for the expression a +. b. 
+There is no way to assign to sum or change its value in any way. 
+
+2.gloabl variable
+let html =
+  let content = read_whole_file file in
+  GHtml.html_from_string content
+  ;;
+Note that the html name in the code snippet above shouldn't really be compared to a real global variable as in C or other imperative languages. 
+There is no space allocated to "store" the "html pointer".
+Nor is it possible to assign anything to html, for example to reassign it to point to a different widget. 
+
+3.References: real variables
+
+What happens if you want a real variable that you can assign to and change throughout your program? 
+You need to use a reference. References are very similar to pointers in C/C++.
+ref 0;;  didn't name it
+the garbage collector came along and collected it immediately afterwards! 
+(actually, it was probably thrown away at compile-time.)
+let my_ref = ref 0;;
+my_ref := 100;;
+!my_ref;;
+- : int = 100
+So the := operator is used to assign to references, 
+and the ! operator dereferences to get out the contents. 
+
+
+Nested Function
+foo (double a, double b)
+{
+  double square (double z) { return z * z; }
+
+  return square (a) + square (b);
+}
+A "nested function" is a function defined inside another function.
+The nested function's name is local to the block where it is defined.
+
+OCaml always capitalizes the first letter of the file name to get the module name.
+
+
+
