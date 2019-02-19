@@ -1,0 +1,26 @@
+# let f x b y = if b then x+y else x+0
+   let f x b y = x + (if b then y else 0)
+   let f x b y = x + (match b with true -> y | false -> 0)
+   let f x b y = x + (let g z = function true -> z | false -> 0 in g y b)
+   let f = fun x -> fun b -> fun y -> if b then x+y else x+0
+   let f x b y = x + (let _ = y + 3 in (); if b then y else 0);;
+val f : int -> bool -> int -> int = <fun>
+Note especially the last one — I'm using ; as an operator to "join" two statements.
+
+function order: int->bool->int->int, gain x, b, y as arguments and return int
+
+let sum_list = List.fold_left ( + ) 0;;
+val sum_list : int list -> int = <fun>
+
+let () = expression ()
+let _ = expression ()
+let _ = expression means "calculate the value of the expression 
+(with all the side-effects that may entail), but throw away the result".
+otherwise. Note that the first form is safer, since it requires that the type of the returned expression is unit; 
+preventing us, for instance, from forgetting an argument in
+
+
+?foo and ~foo is OCaml's way of doing optional and named arguments to functions.
+
+foo#bar is a method invocation (calling a method called bar on an object called foo). 
+It's similar to foo->bar or foo.bar or $foo->bar in C++, Java or Perl respectively.
