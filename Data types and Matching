@@ -1,0 +1,46 @@
+list:
+[1; 2; 3]
+1 :: [2; 3]
+1 :: 2 :: [3]
+1 :: 2 :: 3 :: []
+
+type of linkedlist
+'a list
+It means that the type of the elements is anything, but all the same type of anything.
+
+Structures
+Records
+type pair_of_ints = { a : int; b : int };;
+creating:   { a=3; b=5 };;
+
+Variants
+qualified unions
+type foo =
+    | Nothing
+    | Int of int
+    | Pair of int * int
+    | String of string;;
+enums:
+type sign = Positive | Zero | Negative
+
+Recursive Variants:
+type binary_tree =
+    | Leaf of int
+    | Tree of binary_tree * binary_tree;;
+    
+Parameterized Variants:
+what if we wanted to describe the shape of a binary tree, but decide exactly what to store at each leaf node later?
+type 'a binary_tree =
+    | Leaf of 'a
+    | Tree of 'a binary_tree * 'a binary_tree;;
+This is a general type. The specific type which stores integers at each leaf is called int binary_tree
+
+type 'a equiv_list =
+    | Nil
+    | Cons of 'a * 'a equiv_list;;
+First I think 'a will be equal to 'a...definitely wrong
+Cons(1, Cons(2, Nil));;
+
+Pattern Matching(on datatype)
+So one Really Cool Feature of functional languages is the ability to break apart data structures 
+and do pattern matching on the data
