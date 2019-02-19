@@ -1,0 +1,38 @@
+amodule.ml:
+let hello () = print_endline "Hello"
+
+bmodule.ml:
+Amodule.hello ()
+
+each of these files automatically defines a module named Amodule and a module named Bmodule 
+
+ocamlopt -c amodule.ml
+ocamlopt -c bmodule.ml
+ocamlopt -o hello amodule.cmx bmodule.cmx
+
+only in the terminal you execute the compile then it can produce a hello.exe program.
+
+Interface!!
+If nothing special is done, everything which is defined in a module will be accessible from outside. 
+For this we have to define a module interface, which will act as a mask over the module's implementation.
+
+amodule.ml:
+let message = "Hello"
+let hello () = print_endline message;;
+
+As it is, Amodule has the following interface:
+val message : string
+val hello : unit -> unit
+
+Let's assume that accessing the message value directly is none of the others modules' business. 
+We want to hide it by defining a restricted interface. This is our amodule.mli file:
+val hello : unit -> unit
+
+mli files must be compiled just before the matching .ml files. 
+They are compiled using ocamlc, even if .ml files are compiled to native code using ocamlopt:
+ocamlc -c amodule.mli
+ocamlopt -c amodule.ml
+
+functor!
+A functor is a module that is parametrized by another module, 
+just like a function is a value which is parametrized by other values, the arguments.
