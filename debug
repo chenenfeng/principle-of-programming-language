@@ -92,4 +92,26 @@ The nested function's name is local to the block where it is defined.
 OCaml always capitalizes the first letter of the file name to get the module name.
 
 
+type 'a homebrew_list_t = 
+  | Nil
+  | Cons of 'a * 'a homebrew_list_t
+  and 'a hb_list = {hd: 'a; tl:'a homebrew_list_t}
+;;
 
+let rec homebrew_of_list list = 
+ match list with
+ | [] -> Nil
+ | h :: t -> Cons(h,homebrew_of_list t)
+;;
+
+let rec list_of_homebrew homebrew = 
+  match homebrew with
+  | Nil -> []
+  | Cons(h,t) -> h :: list_of_homebrew t
+;;
+
+list_of_homebrew Cons(2, Cons (3, Cons (4, Nil)))
+Error:This function has type 'a homebrew_list_t -> 'a list
+       It is applied to too many arguments; maybe you forgot a `;'.
+Since I should add () to cover the whole argument 
+list_of_homebrew (Cons(2, Cons (3, Cons (4, Nil))))
