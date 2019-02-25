@@ -1,0 +1,45 @@
+relationship: operational semantics <-> actual interpreter written
+
+Fb syntax and semantics
+top layer has: axiom e.g. v=>v if...then...
+donws in layer, holding+holding to the rule  (like plus rule)  pattern matches. those things hold true
+have those rules, then we get theorem(bottle)
+
+Example with If/= :
+
+(If 3 = 7 Then Fun y -> y+1
+         Else Fun z -> z-1) 5 => 4    things included in bracket is function
+build the tree for this one:   be aware of what is the top of this thing
+in this example, the top thing is a function applying
+
+3=3 7=7
+_____
+(3=7)=>False  Fun z -> z-1=>*
+________________              _____
+m=> Fun z => z-1               5=>5
+_______________________________________   let whole parathenthes notated as m
+(If 3 = 7 Then Fun y -> y+1
+         Else Fun z -> z-1) 5 => 4 
+         
+Q: how to extend '=' rule to booleans?
+add a new rule!
+
+e1=>v1  e2=>v2
+e1 = e2 => v3
+
+Do interpreter!
+e => v in opsem iff eval(parse(e)) returns unparse v 
+concrete syntax, e    e.g. "3+2"  => parse  =>   plus(Int(3)+Int(2))  => unparse => "3+2"
+parse to Abstract syntax tree
+Abstract syntax tree   => unparse to concrete syntax
+
+facts: parse(unparse expr) = expr
+parse function is more complied things
+parse eval res unparse function！！！
+
+make fb.byte
+ocamlrun fb.byte
+
+eval: order  ture false Ocaml view
+recursive call eval()
+boolean interpreter: match patterns!!
