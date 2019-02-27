@@ -1,0 +1,45 @@
+"3+2" -> Int 3 plus Int4(token） ->(parse） term tree ->(eval) Int-5
+let diverger = "(Function x -> x x) (Function x -> x x)" ;;
+(sec debugcript/fb examples.ml
+diverger
+
+Fun x ->x x => *   Fun ->y y => *  (x x)[Fun y -> y y/x]
+(Function x -> x x) (Function x -> x x)  
+this will make infinite layer of trees, do same thing forever this example
+So diverge does not exist any v such taht diverse => v
+so diverge no=>
+
+and, eval diverge does not terminate!
+Other "divergences": 3+True no=> 
+
+But, eval(3+ True) raise an exception
+
+Fact: Fb is deterministic   e=> v1 and also => v2, implies v1 = v2
+Fact: Fb is not normalizing: its not the cast that for all ej  e=> v for some v
+Review: Turing-Complete languages are new normalizing
+
+Fact => closed programs (no free variably) ONLY   so x+2 cannot run
+
+Enocoding pairs
+idea: (3,2) encodes to p32 =>def (Fun d -> (d 3) 2
+left 3 2 => def (Fun n1->Fun n2 -> n1)
+right 3 2 => def (Fun n1->Fun n2 -> n2)
+
+but, using "(3, 1+1)" => (3,2)
+above gets Fun d -> d 3 (1+1)
+
+Solution:
+p32' =def let l = 3 in let r = 1+1 in l r
+
+Encoding lists in Fb
+idea #1
+[1;2;3] is tree. that is also pairs!
+(1,(2,(7,(0,0)))) the last may be empty list
+left -> 1  right -> (the tail)
+
+is empty is impossible!!
+solution: use triples & have a flag for empty
+
+[1;2] is enoded as (False,1,(False,2,(True,0,0)))
+emprylist is (True,0,0)
+so the first of triple is False, then it is not empty
