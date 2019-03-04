@@ -1,0 +1,44 @@
+Fb programming
+
+bigger goal: understand PL features  by translation
+
+today: let Rec is encodeble
+
+warm-up: freeze/thaw
+        let
+        see fb_examples.ml
+        
+let macro
+e1=>v1  e2[v1/x] => v
+  let x = e1 in e2 => v
+(Fun x-> e2) (e1)
+
+Encoding Recursion via Y combinator
+Y combinator & paradoxes => 
+
+Motivation; object self-reference in Python
+class Bag:
+  def __init__(self)::
+     self.data = []
+  def add(self,x)
+      self.data.append(x)
+
+self: explits declare self("me") as parameter! they call the same object
+
+implicit parameterL self.add(x)  self.add(self,x)
+
+b = Bag()
+b.add(5)  b.add(b,5) b is implisit self made explicit
+
+lets do this in Fb!
+
+quichie relation to logic!
+set theory {x|x>0}
+Russell:
+P = {S|S not in S}   suppose  p in p,  suppose p is not in p
+bad set!
+Fb and the paradox
+ sets as truth-valued functions
+ P in Fb:
+  Fun S -> Not(S S)
+  bad question p(p)
