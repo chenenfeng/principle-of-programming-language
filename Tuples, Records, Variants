@@ -1,0 +1,86 @@
+Syntax
+
+Fb + pairs     FbP
+Fb + records   FbR
+Fb + variants  FbV
+Semantics
+test  (Fun p -> Fst p) (1,3) => 1
+（1+2， 7） => (3,7) -Eager Pair
+
+
+
+Eval for FbP
+let rec eval e = 
+  match e with 
+   | Fst(e) -> 
+      let Pr(e1,e2) = eval e
+   | Pr(e1,e2) ->
+     let (v1,v2) = （eval e1, eval e2) in Pr(v1, v2)
+   
+e => (v1,v2)
+Fst e => v1
+
+e1 => v1, e2 => v2
+(e1,e2) => (v1,v2)
+
+                      0+1 => 1   3 => 3  (1,3) => (1,3)
+Fun p -> Fst p => *  (0+1,3) => (1,3)    Fst((1,3)) => 1
+(Fun p -> Fst p) (0+1,3) => 1
+
+Records, FbR
+  records are just pairs with field name (multiples beyond 2)
+
+(1,2) vs {l = 1; r = 2}  conjunction
+FbR Syntax
+e ::= Fb | {l = e;...;l = e}
+          | e.l
+l ::= (record label|strings)
+v ::= Fb | {l = v;...;l = v}
+
+Test cases
+ {x = 5; y = 5+2} => {x=5;y=7}
+ {x = 5; y = 5+2}.y => 7
+ {} => {}
+
+FbR rules
+   ..Fb rules...
+   
+
+e => {l1 = v1; ... ; ln = vn}    n is length of record; could be n=0 
+e.li => vi
+
+
+e1 => v1;... en => vn
+{l1 = e1; ... ln = en} ={l1 = v1;...;ln = vn}
+
+Target: records & variants are duals
+ => encode them in each other
+
+by example
+encoding variants with records
+Fbv: variant code:
+  Let d = 'tic(5) In 
+    Match d with
+      'tic(z) -> z+1
+      'toc(y) -> y-1
+
+encode in FbR: Let d = (Fun r ->(r.tic) 5)
+  In d{tic = Fun z -> z+1; toc = Fun y -> y-1}
+
+Encode records with variants
+let r = {a=5,b=7} In (r.a)+1
+Let's encode in FbV
+  let r = Fun y ->
+    match y with
+      'a() -> 5
+      'b()-> 7
+    In r('a(m))
+
+
+FbV lightning presentation
+  
+
+
+
+
+
