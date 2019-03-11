@@ -1,0 +1,116 @@
+state is side effect
+side effects in general
+
+Need to make fancier relation for side effects
+
+FbS state(ref)
+FbX, eXception
+AFbV , concurrency
+FbIO  input/output
+
+FbIO
+ e.g. Let y = Read In Write (y+1) => ()
+ Let y = Read In Write (y+1) [5]=>[6] 6   four-place relation
+ 
+ FbIO   operational sementics rules
+ Fb old rules are 2-place relation   so we can;t reuse directly
+ 
+e.g.
+reading rule:
+
+Read
+
+Read [v]=>[]  v       this computation read one v output not
+
+
+e I=>O v
+Write e I=>Oe[v]  v is garbage
+
+one other random rule: let
+e1 I1=>O1 v1  e2[v1/x] I2=>O2 v    I1 O1 happened before I2 O2
+Let x = e1 In e2 I1@I2=>O1@O2 v
+
+etc... for other rules
+                    
+                   5+1 []=>[] 6
+ Read [5]=>[] 5   Write (5+1) []=>[6] 6 
+ Let y = Read In Write (y+1) [5]=>[6] 6       [5] = [5]@[]   [6]=[]@[6]
+ 
+ FbS Finally
+ Syntax 
+ e::=... | Ref e| e ：= e | !e
+ v::= ... |
+ 
+ example
+ Let r = Ref 5 In
+  Let _ = r:=!r+1 In !r "=> 6"
+Item: include a heap  program state
+Ref 5, heap => #2, heap #2 location has 5
+that's the informal item.    observeL heap location is a new value!
+
+Formal version of a heap- a store:
+（e, S） => (v, S')
+Heap references- we use cells c1,c2,c3
+abstract heap location  just like #1, #2
+
+State S maps heap location ci to values
+
+e.g. S = {c0 -> 5, c1 |-> Fun x-> x, ...}   |-> mapstring
+notation S{c5 |-> 22};   add mappings to heap
+
+e.g.  ({c |-> 5}){c5 |-> 22} = {c0 |-> 5, c5 |-> 22}
+
+
+FbS rules
+
+(e, S） => (v, S') S"=S'{c |-> v}   S is past, S' perhaps new 
+(Ref e, S) => ( c, S")
+
+
+Let:
+ (e1, S) => (v1,S')  (e2[v1/x], S') => (v,S“）
+(Let x = e1 In e2, S) => (v,S”)
+
+Read:
+(e,S) => (c, S')  S(c)          look up c, 
+(!e, S) => (v, S')
+
+Write:
+(e1, S) => (c,S')  (e2, S') => (v, S")
+(e1:=e2,S) => (v, S"{c |-> v})             v is garbage, ocaml turns out () here
+
+
+Example
+
+(5,{}) => (5,{})
+(Ref 5,{}) => (c, {c|->5})  part2
+Let x = Ref 5 In x:= !x+1 {}) => (6, {c |-> 5})
+
+
+part2:
+x := !x +1 [c/x]
+
+(c,{c |-> 5}) => * （!c+1,{c |-> 5} => (6,{c |-> 5})
+c := :c+1 {c|->5} => (6,{c|->6})    equal rule
+  
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
