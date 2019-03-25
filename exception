@@ -1,0 +1,61 @@
+f(5)+2   the continuation of f(5)
+Normal (1) f(5) =>22
+        (2)  22+2 => 24
+Not normal:
+  A. f(5) throw an exception not caught  => "+2" continuation is ignored top-level exception returned
+  B. Hardware intercept  (e.g. seg fault)
+  C. System exceptions as well(e.g. out of memory in Java)
+  D. About - stop program   e.g. exit in Ocaml
+  E. True + 5 in interpreter- return an exception
+  
+  
+  
+Fancier ones: e.g. call/cc
+back to f(5) + 2   the continuation
+Reify the continuation   make concrete   
+"+2" is Fun v -> v+2
+Generally, the continuation at a pount in exception  "all work left"   turn into function
+
+Call/cc makes a function out of the co continuation(skipping details)
+
+Using explicit continutions in e.g. JavaScript
+simple example  want ajax.run(...)+2
+problem: run ends process +2 abondoned 
+Solution: explicitly pass in continuation:    write ajax.run(Fun v -> v+2) pass in the continuation
+                                              =a call-back function
+this is CPS- continuation passing style
+
+FbX
+FbX = Fb + eXceptions    e:= ...| Try e with # Xn(X) -> e | Raise #Xn (e)
+      v :=  ... | Raise #Xn(v)
+      Xn = String name of exception
+  FbX: Raise #Oops(5)    exception Oops of int;;
+  Ocaml: raise Oops(5)
+  
+Operational Semantics of FbX 
+    Test Casess
+    
+    
+    Try(Raise #Out(2) ) + 22 with  #Oops(x) -> x-2
+    Try(Raise #Out(5) ) + 22 with  #Oops(x) -> x-2
+    
+    
+e=>v
+
+Extended + rules:
+ e1 => Raise #xn(v)
+ e1+e2 => Raise # xn(v)
+ 
+ 
+ e1 => v v not raise e2=> Raise #xn(v)
+ e1+e2 => Raise  #xn(v)
+ 
+ Raising exceptions:
+ e => v
+ Raise #xn(e) => Raise #xn(v)
+    
+ Raise #Oops(2)
+ Try(Raise #Oops(2) ) + 22 with  #Oops(x) -> x-2
+ exception has If ... Then raise exception Else ...    this definenition
+    
+    
