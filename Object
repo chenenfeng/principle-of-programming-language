@@ -1,0 +1,45 @@
+Why Objects?
+Encapsulation: a clear interface with "code+data"
+
+s = new Set;
+s.add（5）;    add in this set
+s.isempty();
+vs Ocaml modules
+  let s = Set.emptySet;;
+  let s' = Set.add（s,5);;   pass in S, add is independent in particular S
+
+objects are intuitive
+ "active and autonomous"
+ like objects in real world
+ 
+ Why Not?
+   shorter       shortest program: Kolmogorou complexity
+   Inheritance - easy code re-use
+   
+Encoding Objects in FbSR
+1.macros by example
+2.Translator: FbOB --> FbSR   o-o syntax => source to source translation
+
+start with 1
+Step A: useless objects
+  Let ob = {x=5; y=7; mag = Fun _ -> sqrt(x^2+y^2)        (not closed)
+                       iszero = Fun _ -> mag() = empty     }o
+missing self-awareness
+   
+Step B: add self
+  Let ob = {x=5; y=7; mag = Fun self ->sqrt(self.x^2+self.y^2); iszero = Fun self ->self.mag self= 0}
+        In ob.iszero ob
+
+Step C:
+   Let pc = Fun ix -> Fun iy -> { x = Ref ix; y = Ref iy; mag = Fun self ->sqrt(self.x^2+self.y^2); iszero = Fun self ->self.mag self= 0}
+        In Let ob = pc 5 7 In 
+          ob.iszero ob
+
+Step D:
+The code above 
+ Let pc = ... above ..In
+ Let cpc = Fun ix -> Fun iy -> Fun ic -> Let p = pc ix iy In
+ Let super = {x=super.x; y = super.y; c= Ref ic; iszero = super.iszero;brightness = Fun self -> ...self.ic；
+                              mag = Fun self -> super.mag self*self.bright self} pass in colorpoint
+ 
+ 
