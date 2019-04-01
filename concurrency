@@ -1,0 +1,52 @@
+Why concurrency
+Moories law for single CPU speed
+natural concurrency in some apps   things running in parallel
+political bondaries   uber app and server
+
+concurrency architectures
+A. SIMD/GPU
+B. Claster/MIMD    high-speed network
+C. Multi threaded    multiple threads of control, one shared memory
+
+
+thread running simultaneously
+
+problem: correctly and reliably coding in This architechture
+
+History of multi-threading 
+Initial appends:(no model)
+Thread1   Memory(Tree)    Thread2
+race condition:  thread thinks add worked but did not!
+
+locks: exclusive access to data
+lock, read, then release, another thread can read
+
+Semephore, synchronized
+
+Bad news: cyclic wait-for = deadlock
+
+Solutions to Java/C/C++... shoud data issue
+A  Ownership (Rust)    owned by #2,   owned by #1    extend ownership
+B   Channels and No shareins,  (Go, clojure, Crystal,..)
+    Thread1 Memory     Memory Thread2   get ->>> put
+    looks a lot like  inter-process communication,   MPT claster
+    still can get deadlock(waiting for put from end other)
+    passing a bug coding penalty
+    But , model is much simpler, fewer nasty bugs.
+C The Actor Model
+    e.g. Erlang, Elixir, Pony, Scala
+    Actor1   Messages                                     Actor2
+   Idle ->|   [1 <- 'hi(x)] (a message to actor1)           |
+   Send(2,'ho(1))  [2 <- 'ho(i)]
+    Actors are 
+      1. Reactive
+           A. default is idle
+           B. gets a message
+           C. does stuff(sned messages, create actors, No receive so no deadlock)
+           D. become idle
+    
+    
+    
+    
+    
+    
