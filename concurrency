@@ -46,7 +46,40 @@ C The Actor Model
            D. become idle
     
     
+      2.Actors have their own state(no shared state)
+      
+      3.Each actor has a unique name, a1,a2,a3
+      
+      4.Messaging protocol
+         1.fairness: never lose messages or store messages
+         2.can queue up
+         3. arrival order doesn't have to be send order(UDP, not TCP)
     
+      5. Actirs are object-like 
+            a name is object name
+            message us ‘msg(0) data
+            message are first-data expressions)            
+            self-aware
+
+AFbV - an actor language    A for actors, V for variants
+Grammer
+e:: = ...Fb... | n(e) | Match ... |  e(actor name) <- e(message package, e.g. 'hi(0) | Create(e,e)
+v :: = a (address like cells) | ...FbV...
+
+Rules 
+    1. "normal" => rulels for a single actor, also need to heep track of side effect
+            .messages
+            .actor creations
+         so, 
+    2. Global actor soup    soup -> soup -> soup
+    (f1('h1(0)) =>(a(2)<-'ho(1)) f1')
+
+
+
+
+
+
+
     
     
     
