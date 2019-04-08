@@ -1,0 +1,61 @@
+Fun x -> x =?  Fun y -> y
+
+Why care about equivalence?
+ 1. math view: algebra of programs  math: cos^2+sin^2 = 1  underlies all math
+ 2. correctness of optimized version:  Ereadable = Eefficient
+ 3. Refactoring justification Ebefore => Ebetter (more readable, extensible)
+ 4. Compiler optimizer, justification
+ 
+Let f: Fun x -> x+1 In f(1)+5  = compute Fun x -> x+1 (1) + 5
+
+problem: can't just = is too "intensional"  -- too much structure visible
+  goal: more extensional (how used)
+  
+  Generally a spectrum:
+   max intensional(=)
+   ....
+   nax extentional(~=)
+   
+Defining ~= for Fb (also works in all others)
+
+Try: e ~= e' iff e=>v iff e' => v
+right for optimization
+wrong for Fun a -> a ~= Fun b -> b
+
+Try 1: notion of Leibniz equivalence (circa 1660)
+      two objects are equivalent if in all uses(need to find this), you can't tell them apart
+  expending: e1 ~= e2 iff for all property P, P(e1) iff P(e2)
+  
+Applying Leibniz to PL:
+  uses are e1/e2 are programs
+
+
+why is 1 not ~= 2
+we have context: if x = 1 Then 0 else omiga(divergence)
+so C 1 => 0
+   C 2 =>      Thus 1 not ~= 2
+   
+C: If . = 1 Then 0 Else omiga
+
+Property
+1. ~= is reflexile: e ~= e
+2. symmetric e1 ~= e2 iff e2 ~= e1
+3. transitive e1~= e2 & e2 ~= e3 implies e1 ~= e3
+4. If e1 ~= e2, then C[e1] ~= C[e2]
+
+Important fixed-point property:
+  for any function f, f(Y f) ~= f
+  - Y f is a fixed point of f
+
+
+
+
+
+
+
+
+
+
+
+
+ 
