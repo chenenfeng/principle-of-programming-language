@@ -1,0 +1,39 @@
+program is normalizing:  for all typed e, then exist v s.t. e => v
+corr: not turling-complete
+TFb in fact has no Let Rec
+
+Also, Fb encoding, may not typecheck in TFb
+
+Example: |- Fun x: ? -> x x  (This is impossible for any type)
+
+Write typeChecker
+Goal: F|- e:tao  tc(F, e) return tao
+F, e: input   tao: output
+
+example:
+                        x:Int |-> x:Int
+                        x:Int |-> x+1
+phi |- True: Bool  phi|- Fun x: Int -> x+1： Int -> Int
+phi|- If True Then Fun x: Int -> x+1 Else Fun y: Int -> y-1 : ___
+
+coding a typechecker via above strategy
+(skip AST)
+Here is the Ocaml pseudo-code:
+let tc g e = 
+  match e with   (return a type)
+   |n -> Int
+   |b -> Bool
+   |e1+e2 -> let (tao1, tao2) = ((tc g e1),(tc g e2)) in 
+              if tao1 = tao2 =Int then Int
+              else raise TypeError
+   | Fun x: tao ->e' ->
+        let tao' = tc (g@x:tao) e' in tao->tao'
+   | x -> lookup(x,g)  i.e. x:tao is in g, return tao
+   | e1 e2 -> let(tao1, tao2) = ((tc g e1),(tc g e2))
+                in match tao1 with
+                (tao10 -> tao11) -> if tao10 = tao2 then tao11
+                _ -> raise TypeError
+                
+Theorem: tc is sound and complete:
+1. sound(correct) if tc(e) returns tao implies |- e:tao
+2. complete: if |- e:tao then tc(e) returns tao
