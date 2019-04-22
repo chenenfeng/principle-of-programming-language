@@ -1,0 +1,40 @@
+classic type inference: Ocaml, Haskell
+
+modern type inference(same ideas):
+    Java var,
+    C++ auto,
+    swift 
+    go
+    
+inference infers type deals for statically typed language
+EFb: Fb with type inference
+
+EFb synrax = Fb syntax
+Type inference by example
+idea like its algebra make equations on type 'a, 'b ...and solve
+(Fun n -> If n = 0 Then n+1 Else 2) 5
+     ’a unknown
+     ‘a -> 'b
+declare any other equations 
+check for contradictions 
+print the type
+
+ocaml algorithm
+
+formalizing type inference:
+  |- e: tao \ E
+
+tao grammer
+tao ::= Int | Bool | 'a | tao -> tao
+Proof system for |- e: tao \ E
+  for #1: 
+  +rule
+   |- e1: tao1 \ E(collected e1 equation here） |- e2: tao1 \ E(collected e2 equation here）
+   |- e1+e2: Int \{tao1 = Int, tao2 = Int} U E1 U E2
+
+example:
+  n: 'a |- n:'a \phi   n: 'a |-0: Int \ phi 
+  n: 'a |- n = 0: Bool\{'a =Int  Int = Int}    n: 'a |- n:'a    n:a |- 2:Int
+n : 'a |- If n = 0 Then n Else 2: \
+(Fun n -> If n = 0 Then n Else 2): \        5:Int\phi（no constraint)
+(Fun n -> If n = 0 Then n Else 2) 5:  \
