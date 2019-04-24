@@ -1,0 +1,41 @@
+Why:
+1. no worry about forgot to free(memory leak)
+2. can optimize free startegy
+3. no worry about free too early    lose it
+
+Why not:
+1. sweat is good
+2. understand and do better than best
+3. GC adds overhead    2% penalty      worst case performance BAD
+
+GC Algorithms
+school1: reference counting
+swift use reference counting
+Idea: each object counts pointer to it
+      maintain durinks execution
+      if counter goes to 0, free it
+downside: cycles => memory leak
+has cycle management methods
+-see link to ADC Swift docs
+
+How about Java, Python, JavaScript, etc?
+Mark & Sweep
+Mark & Copy
+
+Mark & Sweep Collection
+1. run as normal
+2. out of memory => collection model.   stop threads
+Definition by picture
+
+stack     heap
+rootset  never garbage
+Mark all reachable object
+free unmarked objects
+
+Mark & Copy
+variation on Mark & Sweep
+wastes 1/2 its memoty
+a
+create new objects in mark & copy
+then to mark & sweep
+
