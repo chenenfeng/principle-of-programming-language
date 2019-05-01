@@ -1,0 +1,123 @@
+Advanced functional programming
+  cata ghroms
+  monds
+  
+Program understanding
+  more types
+  program analysis
+  program verification
+    probe program meets spec
+    
+Recall our spaces of metevariables:
+  e, expressions ::=  e+e | e e | ... | !e | Raise .. |
+  v,values the results of competition ::= Fun x -> e | 0 | 1| ...
+  x(italic) - represents any legal variable
+  c(cell) - cell names - Cell(s) : ~ AST
+      never wrote them out in book
+      Let c = 5 in ..  c is x   parse it, then c will be ident
+      
+  AST for variables:
+    Ident("c") -def
+    Var(Ident "c") -use
+   
+  Cells can't be written in source code
+  
+    l(labels for records)
+      {l1=e1;...;ln = en}
+      can match any record
+      e,g. {a =5; b =7}
+      
+    tao. types   tao ::= Int | tao -> tao'
+    alpha - type variable
+        concrete types
+           'a,'b,'c
+         lecture sloppy used 'a when should have used alpha
+         
+         
+    n(variant clavses)
+        'head 'tail
+        e.g. Match 'head(5) with
+                'nil(x) ->...
+                'head(y) -> ...
+    xn
+      #bad  #ouch
+    
+    a,  actor runtime names
+          (like cells, -not in source code)
+          (never had concrete region）
+
+key relation
+  e => v   evaluation   (a 2-place relation)
+  side effects:
+   <e,S> => <v,S>   eval with state
+   e => v   new actored messages    generate the new actor,  it is output   eval(e) = (v, S) in actor implementation
+   
+   Type systems relations;
+     gamma |- e:tao
+     under variable type assumption, gamma, e has type tao
+     TFb no alpha in tao
+     EFb: add alpha to tao
+     
+     EFb: gamma |- e : tao\E(set of {tao1 = tao1',...taon = taon'}
+     
+     subtyping 'tao <: tao
+      e.g. {a:Int} <: {} used in STFb   both of them are inputs
+
+How to build language extensions
+  e.g. lists, FbL, TFbL
+  Syntax : e::= ...Fb... | e::e | [] | 
+          Match e with
+            [] -> e
+            | x::x ->e
+          v := []
+      also [1;2] is a value in Ocaml;  here that is 1 ::(2::[])
+
+FbL evaluator
+  high-level for new feature: 
+   intro  builder/counstructor/creator
+   elim   user/applier
+   
+   intro/creation: 
+    [], ::
+   elim : Match
+   make sure to cover both sides
+  
+   Operational Symantics rules for FbL
+      repeat all Fb rules
+   easy stuff: intro forms
+   
+   [] => []
+   
+   e1 => v1 e2 => v2
+   e1 :: e2 =>  v1 :: v2
+   
+   general pattern
+   
+   e => []   e1 =>v
+   Match e with [] -> e1 | x::y -> e2  => v
+   
+   non- [] rule:
+
+  e => v1 :: ve   (e2[v1/x])[v2/y] => v
+  Match e with [] -> e1 | x::y -> e2  => v
+   
+   
+   
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
