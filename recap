@@ -1,0 +1,67 @@
+<e,S> => <v,S>
+cx vs x:
+x = cell(3) 
+cx = @cell(3)
+cx is wrapping a ref with "@"
+convert to operational symentics
+
+Let x = Ref 3 in !x    Ref 3 compute <c,{c|->3}>
+x is c, S={c|->3}
+cx is @c(new runtime value)
+
+New Rule
+<e,S> =><@c,S'>        c|->v belongs to S
+<!e,S> => <v,S>
+
+:= No rule => get stuck
+
+one more rule:
+
+<e,S> => <v,S'>   or just <c,S'>
+<@e,S> => <@v,S'>        <@c,S'>
+
+in analogy with pair(3+2,7)
+e1=>v1 e2=>v2
+(e1,e2) => (v1,v2)
+
+core idea
+(intro Ref'n)
+gamma |- e: Ref tao
+gamma |- @e: Const Ref tao
+
+(elim   use)
+gamma |- e:Const Ref tao
+gamma |- !e:tao
+
+c.
+ Int Ref vs Int Const Ref   <:  :> or neither
+ substyping to obey 
+ e: Int Ref    Int Ref <: Int ConstRef
+ e: Int ConstRef
+ 
+ 
+ 2b. goal
+ make a c   context
+ c: Let g = Fun s0 -> Fun two -> s0 s0 two In .
+ 
+ for next, y-combinator,   y^"code"
+ 
+ 
+3a. 
+e1 => v1  e2 => v2   v1 or v2 is not Z
+e1 + e2 => 0
+etc. for other operator
+
+3b.
+0+True => 0 is operational equivalence in FbSJ but not in Fb
+context to show != in FbJS   c=.  both terminate or not if we replace the context
+none
+
+4  bad idea:
+techie goes dis <- 'bomb; dis <- 'bomb   2 'bomp in soup
+one good idea:
+ 1.  disarmor to techi 1 : 'bondplease()
+ 2. techie1 sends
+ 3             1: bombplease()
+ 4. 2
+
